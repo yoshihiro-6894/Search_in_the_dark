@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject goal;//鍵を全部取ったら出現するゴール
+    public GameObject goal;//鍵を全部取ったら出現するゴール
     private int CountKey = 0;//鍵の数
     private bool Set = false;
+
+
+    private void Awake()
+    {
+        goal.SetActive(false);
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
-        goal.SetActive(false);//ゴールを非表示にする
+        
     }
 
     // Update is called once per frame
