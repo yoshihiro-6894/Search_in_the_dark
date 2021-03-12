@@ -17,7 +17,7 @@ public class Button : MonoBehaviour
     void Update()
     {
         //オブジェクトからTextコンポーネントを取得
-        Text score_text = score_object.Getcomponent<Text>();
+        Text score_text = score_object.GetComponent<Text>();
 
         //テキストの表示を入れ替える
         score_text.text = "PreStage1";
