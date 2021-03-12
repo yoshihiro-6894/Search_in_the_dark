@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rigid2D;
+    Animator animator;
 
     float jumpForce = 680.0f;
     float walkForce = 30.0f;
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         this.rigid2D = GetComponent<Rigidbody2D>();
+       
     }
 
     // Update is called once per frame
@@ -25,7 +27,12 @@ public class PlayerController : MonoBehaviour
 
         int key = 0;
         if (Input.GetKey(KeyCode.D)) key = 1;
-        if (Input.GetKey(KeyCode.A)) key = -1;
+        if (Input.GetKey(KeyCode.A))
+        {
+            key = -1;
+            
+        }
+
 
         float speedx = Mathf.Abs(this.rigid2D.velocity.x);
 
@@ -37,5 +44,7 @@ public class PlayerController : MonoBehaviour
         {
             rigid2D.velocity = new Vector2(0f, this.rigid2D.velocity.y);
         }
+
+        
     }
 }
