@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         this.rigid2D = GetComponent<Rigidbody2D>();
-       
+        this.animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -26,11 +26,15 @@ public class PlayerController : MonoBehaviour
         }
 
         int key = 0;
-        if (Input.GetKey(KeyCode.D)) key = 1;
+        if (Input.GetKey(KeyCode.D))
+        {
+            key = 1;
+            this.animator.SetTrigger("RightTrigger");
+        }
         if (Input.GetKey(KeyCode.A))
         {
             key = -1;
-            
+            this.animator.SetTrigger("LeftTrigger");
         }
 
 
@@ -45,6 +49,6 @@ public class PlayerController : MonoBehaviour
             rigid2D.velocity = new Vector2(0f, this.rigid2D.velocity.y);
         }
 
-        
+        this.animator.speed = speedx/2.0f;
     }
 }
