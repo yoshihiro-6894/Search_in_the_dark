@@ -14,6 +14,7 @@ public class ResetScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Rを押したらそのシーンをやり直す,ゲームオーバー時等にも実装したいが一応仮としてここに書いておく
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
