@@ -11,7 +11,7 @@ public class key : MonoBehaviour
     void Start()
     {
         keyAnim = GetComponent<Animator>();
-        keyAnim.SetBool("IsGetKey", false);
+        keyAnim.SetBool("IsGetkey", false);
         gamemanager = GameObject.Find("GameManager").GetComponent<GameManager>();
         gamemanager.UpCount();
     }
@@ -24,8 +24,9 @@ public class key : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        keyAnim.SetBool("IsGetKey", true);
+
+        GetComponent<PolygonCollider2D>().enabled = false;
         gamemanager.DownCount();
-        //Destroy(this.gameObject);
+        keyAnim.SetBool("IsGetkey", true);
     }
 }
