@@ -7,9 +7,9 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigid2D;
     Animator animator;
 
-    float jumpForce = 680.0f;
-    float walkForce = 30.0f;
-    float maxwalkSpeed = 10.0f;
+    [SerializeField] private float jumpForce = 650.0f;
+    [SerializeField] private float walkForce = 7.0f;
+    //float maxwalkSpeed = 10.0f;
    
     void Start()
     {
@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
         float speedx = Mathf.Abs(this.rigid2D.velocity.x);
 
+        rigid2D.velocity = new Vector2(key * walkForce, rigid2D.velocity.y);
+        /*
         if(speedx < this.maxwalkSpeed)
         {
             this.rigid2D.AddForce(transform.right * key * this.walkForce);
@@ -48,7 +50,7 @@ public class PlayerController : MonoBehaviour
         {
             rigid2D.velocity = new Vector2(0f, this.rigid2D.velocity.y);
         }
-
+        */
         this.animator.speed = speedx/2.0f;
     }
 }
