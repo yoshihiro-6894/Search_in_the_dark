@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigid2D;
     Animator animator;
 
-    [SerializeField] private float jumpForce = 650.0f;
+    [SerializeField] private float jumpForce = 650.0f;//[SerializeField]によってUnityEditor上で編集できる
     [SerializeField] private float walkForce = 7.0f;
     //float maxwalkSpeed = 10.0f;
    
