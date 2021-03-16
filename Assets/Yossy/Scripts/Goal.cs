@@ -19,7 +19,7 @@ public class Goal : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         GetComponent<BoxCollider2D>().enabled = false;
         goalAnim.SetBool("isGet", true);
