@@ -22,7 +22,7 @@ public class key : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
 
         GetComponent<PolygonCollider2D>().enabled = false;
