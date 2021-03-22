@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
         if (Set && CountKey == 0)//鍵が0かつSetがtrueのとき
         {
-            goal.SetActive(true);//ゴールを表示する
+            StartCoroutine(GoalSet());
         }
     }
 
@@ -43,5 +43,12 @@ public class GameManager : MonoBehaviour
     public void DownCount()
     {
         CountKey--;
+    }
+
+    IEnumerator GoalSet()
+    {
+        yield return new WaitForSeconds(3f);
+        goal.SetActive(true);
+        yield return null;
     }
 }
