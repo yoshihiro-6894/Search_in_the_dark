@@ -8,20 +8,22 @@ public class PLYctrl : MonoBehaviour
     Animator animator;
     SpriteRenderer sprite;
 
-    [SerializeField] private float jumpForce = 650.0f;//[SerializeField]によってUnityEditor上で編集できる
-    [SerializeField] private float walkForce = 7.0f;
-    [SerializeField] private float MaxjumpHeight = 2.5f;
+    [SerializeField] private float jumpForce = 7.0f;//[SerializeField]によってUnityEditor上で編集できる
+    [SerializeField] private float walkForce = 4.0f;
+    [SerializeField] private float MaxjumpHeight = 2.0f;
     [SerializeField] ContactFilter2D filter2d;
 
-    private bool Isjump = false;
+    private bool allowJump = true;
     private bool onGround = false;
 
-    float key;//左右移動-1,0.1をとる
+    private float key;//左右移動-1,0.1をとる
+    private float GroundYpos;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        filter2d.useNormalAngle = true;
         this.rigid2D = GetComponent<Rigidbody2D>();
         this.animator = GetComponent<Animator>();
         this.sprite = GetComponent<SpriteRenderer>();
@@ -36,29 +38,41 @@ public class PLYctrl : MonoBehaviour
     {
         key = Input.GetAxisRaw("Horizontal");//左-1,右1,その他0
         animator.SetFloat("Xvec", key);
-
-        onGround = rigid2D.IsTouching(filter2d);
-
-        if (onGround)
-        {
-            if (Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                Jump();
-            }
-        }
     }
     private void FixedUpdate()
     {
-        rigid2D.velocity = new Vector2(key * walkForce, rigid2D.velocity.y);
-        if (Isjump)
+        float spd_y=this.rigid2D.velocity.y;
+        onGround = rigid2D.IsTouching(filter2d);//接地判定
+
+        if (allowJump)
         {
-            this.rigid2D.AddForce(transform.up * this.jumpForce);
-            Isjump = false;
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            {
+                spd_y = jumpForce;
+                if (onGround)//地面についている時、y座標を取得
+                    GroundYpos = this.transform.position.y;
+
+                if (this.transform.position.y >= MaxjumpHeight + GroundYpos)//ジャンプの最高点にいったらジャンプ終了
+                    allowJump = false;
+
+                if (this.rigid2D.velocity.y == 0)//これがないと天井にぶつかったときに空中に浮く
+                    allowJump = false;
+            }
+            else
+                allowJump = false;
         }
+        else
+        {
+            if (!allowJump && onGround)
+            {
+                allowJump = true;
+            }
+        }
+
+        animator.SetBool("isjump", !onGround);
+        
+        rigid2D.velocity = new Vector2(key * walkForce, spd_y);
     }
 
-    private void Jump()
-    {
-        this.Isjump = true;
-    }
+   
 }
