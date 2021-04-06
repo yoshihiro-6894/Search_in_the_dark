@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PLYctrl : MonoBehaviour
 {
-    Rigidbody2D rigid2D;
-    Animator animator;
-    SpriteRenderer sprite;
+    private Rigidbody2D rigid2D;
+    private Animator animator;
+    private SpriteRenderer sprite;
+    private AudioSource Audiojump;
 
     [SerializeField] private float jumpForce = 7.0f;//[SerializeField]によってUnityEditor上で編集できる
     [SerializeField] private float walkForce = 4.0f;
@@ -15,6 +16,7 @@ public class PLYctrl : MonoBehaviour
 
     private bool allowJump = true;
     private bool onGround = false;
+    private bool PlayjumpSE = false;
 
     private float key;//左右移動-1,0.1をとる
     private float GroundYpos;
@@ -27,6 +29,7 @@ public class PLYctrl : MonoBehaviour
         this.rigid2D = GetComponent<Rigidbody2D>();
         this.animator = GetComponent<Animator>();
         this.sprite = GetComponent<SpriteRenderer>();
+        this.Audiojump = GetComponent<AudioSource>();
         if (sprite.sprite.name == "right1")
             animator.SetBool("startidle", true);
         else
@@ -48,6 +51,13 @@ public class PLYctrl : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
+                if (PlayjumpSE)
+                {
+                    if(onGround)
+                    Audiojump.PlayOneShot(Audiojump.clip);
+
+                    PlayjumpSE = false;
+                }
                 spd_y = jumpForce;
                 if (onGround)//地面についている時、y座標を取得
                     GroundYpos = this.transform.position.y;
@@ -66,6 +76,7 @@ public class PLYctrl : MonoBehaviour
             if (!allowJump && onGround)
             {
                 allowJump = true;
+                PlayjumpSE = true;
             }
         }
 
