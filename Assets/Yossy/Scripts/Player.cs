@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PLYctrl : MonoBehaviour
+public class Player : MonoBehaviour
 {
     private Rigidbody2D rigid2D;
     private Animator animator;
