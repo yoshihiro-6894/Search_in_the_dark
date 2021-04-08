@@ -6,10 +6,16 @@ public class key : MonoBehaviour
 {
     private GameManager gamemanager;
     private Animator keyAnim;
+    private AudioSource audioSource;
+    Collider2D col2d;
+
+    private bool NotGet = true;
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        col2d = GetComponent<PolygonCollider2D>();
         keyAnim = GetComponent<Animator>();
         keyAnim.SetBool("IsGetkey", false);
         gamemanager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -24,8 +30,12 @@ public class key : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        GetComponent<PolygonCollider2D>().enabled = false;
+        if (NotGet)
+        {
+            audioSource.PlayOneShot(audioSource.clip);
+            NotGet = false;
+        }
+        col2d.enabled = false;
         gamemanager.DownCount();
         keyAnim.SetBool("IsGetkey", true);
     }
