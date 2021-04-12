@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
+
 public class DarknessBehaviour : MonoBehaviour, IDarknessBehaviour
 {
+
     public bool isHighlighting { get; set; }
 
     public void Highlighted()
