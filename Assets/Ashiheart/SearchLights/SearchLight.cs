@@ -4,25 +4,41 @@ using UnityEngine;
 
 public class SearchLight : MonoBehaviour
 {
-    private Vector3 position;
-	// スクリーン座標をワールド座標に変換した位置座標
-	private Vector3 screenToWorldPointPosition;
+    [SerializeField] private float LightRadius = 3.5f;
+
+    private RaycastHit2D hit;
+
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        position = Input.mousePosition;
-		// Z軸修正
-		position.z = 10f;
-		// マウス位置座標をスクリーン座標からワールド座標に変換する
-		screenToWorldPointPosition = Camera.main.ScreenToWorldPoint(position);
-		// ワールド座標に変換されたマウス座標を代入
-		gameObject.transform.position = screenToWorldPointPosition;
-        
+        transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        transform.position.Set(
+            transform.position.x,
+            transform.position.y,
+            1f
+            );
+
+        foreach (
+            RaycastHit2D r
+            in
+            Physics2D.CircleCastAll(transform.position, LightRadius * 0.5f * 0.95f, transform.forward))
+        {
+            Debug.Log("hit! " + r.collider.gameObject.name);
+
+            IDarknessBehaviour obj = r.collider.gameObject.GetComponent<IDarknessBehaviour>();
+
+            if (obj != null)
+            {
+                obj.isHighlighting = true;
+
+                obj?.Highlighted();
+            }
+        }
     }
 }
