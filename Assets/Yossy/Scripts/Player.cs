@@ -7,7 +7,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rigid2D;
     private Animator animator;
     private SpriteRenderer sprite;
-    private AudioSource Audiojump;
+    private AudioSource AudioSE;
+    public AudioClip SEgameover;
 
     [SerializeField] private float jumpForce = 7.0f;//[SerializeField]によってUnityEditor上で編集できる
     [SerializeField] private float walkForce = 4.0f;
@@ -30,7 +31,7 @@ public class Player : MonoBehaviour
         this.rigid2D = GetComponent<Rigidbody2D>();
         this.animator = GetComponent<Animator>();
         this.sprite = GetComponent<SpriteRenderer>();
-        this.Audiojump = GetComponent<AudioSource>();
+        this.AudioSE = GetComponent<AudioSource>();
         if (sprite.sprite.name == "right1")
             animator.SetBool("startidle", true);
         else
@@ -51,12 +52,12 @@ public class Player : MonoBehaviour
         {
             if (allowJump)
             {
-                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
                 {
                     if (PlayjumpSE)
                     {
                         if (onGround)
-                            Audiojump.PlayOneShot(Audiojump.clip);
+                            AudioSE.PlayOneShot(AudioSE.clip);
 
                         PlayjumpSE = false;
                     }
@@ -71,7 +72,7 @@ public class Player : MonoBehaviour
                         allowJump = false;
                 }
                 else
-                    allowJump = false;
+                     allowJump = false;
             }
             else
             {
@@ -103,6 +104,7 @@ public class Player : MonoBehaviour
     public void NotMove()
     {
         this.CanMove = false;
+        this.AudioSE.PlayOneShot(SEgameover);
     }
 
 

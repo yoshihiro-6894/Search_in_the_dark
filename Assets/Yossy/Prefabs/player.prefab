@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 9146414024306446104}
   - component: {fileID: 5144417878080206497}
   m_Layer: 0
-  m_Name: Player
+  m_Name: player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -273,6 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c290148ebc25a42aa5ed19888ebaec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SEgameover: {fileID: 8300000, guid: 067a7fd48139edf48b591f376a6d0361, type: 3}
   jumpForce: 6
   walkForce: 4
   MaxjumpHeight: 2
