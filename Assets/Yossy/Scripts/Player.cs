@@ -14,8 +14,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float MaxjumpHeight = 2.0f;
     [SerializeField] ContactFilter2D filter2d;
 
-    private bool allowJump = true;
-    private bool onGround = false;
+    private bool CanMove = true;//移動可能
+    private bool allowJump = true;//ジャンプできるか
+    private bool onGround = false;//接地しているか
     private bool PlayjumpSE = false;
 
     private float key;//左右移動-1,0.1をとる
@@ -46,44 +47,63 @@ public class Player : MonoBehaviour
     {
         float spd_y=this.rigid2D.velocity.y;
         onGround = rigid2D.IsTouching(filter2d);//接地判定
-
-        if (allowJump)
+        if (CanMove)
         {
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            if (allowJump)
             {
-                if (PlayjumpSE)
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
                 {
-                    if(onGround)
-                    Audiojump.PlayOneShot(Audiojump.clip);
+                    if (PlayjumpSE)
+                    {
+                        if (onGround)
+                            Audiojump.PlayOneShot(Audiojump.clip);
 
-                    PlayjumpSE = false;
+                        PlayjumpSE = false;
+                    }
+                    spd_y = jumpForce;
+                    if (onGround)//地面についている時、y座標を取得
+                        GroundYpos = this.transform.position.y;
+
+                    if (this.transform.position.y >= MaxjumpHeight + GroundYpos)//ジャンプの最高点にいったらジャンプ終了
+                        allowJump = false;
+
+                    if (this.rigid2D.velocity.y == 0)//これがないと天井にぶつかったときに空中に浮いてしまう
+                        allowJump = false;
                 }
-                spd_y = jumpForce;
-                if (onGround)//地面についている時、y座標を取得
-                    GroundYpos = this.transform.position.y;
-
-                if (this.transform.position.y >= MaxjumpHeight + GroundYpos)//ジャンプの最高点にいったらジャンプ終了
-                    allowJump = false;
-
-                if (this.rigid2D.velocity.y == 0)//これがないと天井にぶつかったときに空中に浮く
+                else
                     allowJump = false;
             }
             else
-                allowJump = false;
+            {
+                if (!allowJump && onGround)
+                {
+                    allowJump = true;
+                    PlayjumpSE = true;
+                }
+            }
+
+
+            this.animator.SetBool("isjump", !onGround);
+
+            rigid2D.velocity = new Vector2(key * walkForce, spd_y);
         }
         else
-        {
-            if (!allowJump && onGround)
-            {
-                allowJump = true;
-                PlayjumpSE = true;
-            }
-        }
-
-        animator.SetBool("isjump", !onGround);
-        
-        rigid2D.velocity = new Vector2(key * walkForce, spd_y);
+            rigid2D.velocity = Vector2.zero;
     }
 
-   
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Trap")
+        {
+            this.animator.SetBool("GameOver",true);
+            NotMove();
+        }
+    }
+
+    public void NotMove()
+    {
+        this.CanMove = false;
+    }
+
+
 }
