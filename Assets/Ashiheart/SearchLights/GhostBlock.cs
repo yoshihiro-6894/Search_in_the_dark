@@ -14,7 +14,6 @@ public class GhostBlock : MonoBehaviour, IDarknessBehaviour
     public void LightEnter(bool characterEnter)
     {
         gameObject.GetComponent<Collider2D>().isTrigger = characterEnter;
-        
     }
 
     void Awake()
