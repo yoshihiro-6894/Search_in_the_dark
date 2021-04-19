@@ -1,42 +1,82 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
+using System;
 
 [RequireComponent(typeof(Collider2D))]
 
 public class DarknessBehaviour : MonoBehaviour, IDarknessBehaviour
 {
+    [SerializeField] SearchLight searchlight;
 
-    public bool isHighlighting { get; set; }
+    private bool searchLightEnter;
+
+    private bool characterEnter;
+
 
     public void Highlighted()
     {
-        Debug.Log(gameObject.name + " 光った!");
-        isHighlighting = true;
-        gameObject.GetComponent<Collider2D>().isTrigger = true;
 
     }
 
     public void DisHighlighted()
     {
-        Debug.Log(gameObject.name + " 消えた...");
-        isHighlighting = false;
-        gameObject.GetComponent<Collider2D>().isTrigger = false;
     }
 
     public void Highlighting()
     {
     }
 
+    void Awake()
+   {
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+
+        /*
+        Observable.Zip(searchlight.OnTriggerStay2DAsObservable(), searchlight.OnTriggerStay2DAsObservable())
+            .Where(_ => _[0].gameObject.name == "Character" && _[1].gameObject.name == "Character")
+            */
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (searchLightEnter && characterEnter && !gameObject.GetComponent<Collider2D>().isTrigger)
+        {
+
+        }
         
+    }
+
+    public void OnCollisionEnter(Collider other)
+    {
+        /*
+        gameObject.GetComponent<Collider2D>().isTrigger = true;
+        if (string.Equals(other.gameObject.name, "Character"))
+        {
+            CharacterAndLightEnter.Chara
+        }
+        else if (string.Equals(other.gameObject.name, "SearchLight"))
+        {
+
+
+        }
+        */
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        /*
+        if (string.Equals(other.gameObject.name, "Character"))
+        {
+            gameObject.GetComponent<Collider2D>().isTrigger = false;
+        }
+        */
     }
 }
