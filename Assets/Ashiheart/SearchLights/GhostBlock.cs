@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
+using DG.Tweening;
 
 [RequireComponent(typeof(Collider2D))]
 
@@ -13,6 +14,12 @@ public class GhostBlock : MonoBehaviour, IDarknessBehaviour
     public void LightEnter(bool characterEnter)
     {
         gameObject.GetComponent<Collider2D>().isTrigger = characterEnter;
+        
+    }
+
+    void Awake()
+    {
+        this.gameObject.GetComponent<SpriteRenderer>().color = Color.black;
     }
 
     // Start is called before the first frame update
