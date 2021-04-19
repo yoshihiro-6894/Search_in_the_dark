@@ -9,19 +9,17 @@ public class SearchLight : MonoBehaviour
 {
     [SerializeField] private float LightRadius = 3.5f;
 
-    private Subject<bool> onLighted= new Subject<bool>();
-
-    public IObservable<bool> OnLighted => onLighted;
-
-
-    public enum PlayerState {  Enter, Exit, Stay }
+    public bool onPlayerEnter { get; private set; }
 
     private Vector3 pos = Vector3.zero;
+
+    private void Awake()
+    {
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -29,23 +27,17 @@ public class SearchLight : MonoBehaviour
     {
         pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        if (transform.position != pos)
+        transform.position = new Vector3(
+            pos.x,
+            pos.y,
+            1f
+            );
+
+        onPlayerEnter = Physics2D.CircleCast(transform.position, LightRadius * 0.5f, transform.forward, Mathf.Infinity, 1 << 8);
+
+        foreach (var r in Physics2D.CircleCastAll(transform.position, LightRadius * 0.5f, transform.forward, Mathf.Infinity, 1 << 10))
         {
-            transform.position = new Vector3(
-                pos.x,
-                pos.y,
-                1f
-                );
-
-            Physics2D.CircleCastAll(transform.position, LightRadius * 0.5f, transform.forward);
-
+            r.collider.gameObject.GetComponent<IDarknessBehaviour>()?.LightEnter(onPlayerEnter);
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-
-        
-    }
-
 }

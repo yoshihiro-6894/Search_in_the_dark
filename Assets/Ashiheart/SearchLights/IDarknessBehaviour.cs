@@ -4,9 +4,6 @@ using UnityEngine;
 
 public interface IDarknessBehaviour
 {
-    void Highlighted();
+    void LightEnter(bool characterEnter);
 
-    void DisHighlighted();
-
-    void Highlighting();
 }
