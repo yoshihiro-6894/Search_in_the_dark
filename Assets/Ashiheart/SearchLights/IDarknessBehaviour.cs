@@ -4,9 +4,9 @@ using UnityEngine;
 
 public interface IDarknessBehaviour
 {
-    bool isHighlighting { get; set; }
-
     void Highlighted();
 
     void DisHighlighted();
+
+    void Highlighting();
 }
