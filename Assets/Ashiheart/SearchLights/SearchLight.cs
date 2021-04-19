@@ -33,9 +33,9 @@ public class SearchLight : MonoBehaviour
             1f
             );
 
-        onPlayerEnter = Physics2D.CircleCast(transform.position, LightRadius * 0.5f, transform.forward, Mathf.Infinity, 1 << 8);
+        onPlayerEnter = Physics2D.CircleCast(transform.position, LightRadius * 0.5f * 0.99f, transform.forward, Mathf.Infinity, 1 << 8);
 
-        foreach (var r in Physics2D.CircleCastAll(transform.position, LightRadius * 0.5f, transform.forward, Mathf.Infinity, 1 << 10))
+        foreach (var r in Physics2D.CircleCastAll(transform.position, LightRadius * 0.5f * 0.99f, transform.forward, Mathf.Infinity, 1 << 10))
         {
             r.collider.gameObject.GetComponent<IDarknessBehaviour>()?.LightEnter(onPlayerEnter);
         }
