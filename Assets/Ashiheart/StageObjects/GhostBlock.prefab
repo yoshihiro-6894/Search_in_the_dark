@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5052999766521989341}
   - component: {fileID: 5052999766521989338}
   - component: {fileID: 5052999766521989339}
-  - component: {fileID: 5052999766521989336}
+  - component: {fileID: -753376492467247856}
   m_Layer: 10
   m_Name: GhostBlock
   m_TagString: Untagged
@@ -109,7 +109,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0000001, y: 1}
   m_EdgeRadius: 0
---- !u!114 &5052999766521989336
+--- !u!114 &-753376492467247856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,6 +118,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5052999766521989337}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2ac2af5b6ad8a94c85c101e0bc6088c, type: 3}
+  m_Script: {fileID: 11500000, guid: 736810ef2b9abd64ebf5ec32e87fcad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

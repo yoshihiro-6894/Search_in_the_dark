@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
+using DG.Tweening;
 
 [RequireComponent(typeof(Collider2D))]
 
@@ -23,11 +24,5 @@ public class GhostBlock : MonoBehaviour, IDarknessBehaviour
             .Subscribe(c => gameObject.GetComponent<Collider2D>().isTrigger = false)
             .AddTo(this)
             ;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
