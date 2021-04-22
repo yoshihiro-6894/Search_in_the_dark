@@ -12,40 +12,44 @@ public class SearchLight : MonoBehaviour
 
     private bool isCursorFollowing = false;
 
+    private float CursorSize;
+
     public bool onPlayerEnter { get; private set; }
+
+    private void Awake()
+    {
+        Cursor.visible = true;
+
+        transform.position = transform.Find("../Character").position;
+
+        CursorSize = transform.localScale.x;
+
+        transform.localScale = Vector2.one * CursorSize;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = player.transform.position;
-
-        transform.localScale = new Vector3(
-            transform.localScale.x * 0.5f,
-            transform.localScale.y * 0.5f,
-            transform.localScale.z * 0.5f
-            );
-
+        // マウスカーソルがライト内に入ったら始まる
         Observable.EveryUpdate()
             .Where(_ => !isCursorFollowing)
-            .Select(p => Camera.main.ScreenToWorldPoint(Input.mousePosition))
-            .Select(p => p = new Vector3(p.x, p.y, 1f))
-            .Where(p => string.Equals(Physics2D.Raycast(p, transform.forward).collider.gameObject.name, gameObject.name))
+            .Select(p => (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition))
             .Select(p => Physics2D.Raycast(p, transform.forward))
-            .Where(r => r)
-            .Where(r => string.Equals(r.collider.gameObject.name, gameObject.name))
+            .Where(r => r && string.Equals(r.collider.gameObject.name, gameObject.name))
             .Subscribe(_ =>
                 DOTween.Sequence()
-                    .Append(transform.DOMove(p, 0.1f))
+                    .AppendCallback(() => Cursor.visible = false)
                     .AppendCallback(() => isCursorFollowing = true)
+                    .Join(transform.DOScale(CursorSize, 0.1f))
+                    )
             .AddTo(this)
             ;
 
+        // サーチライトのマウス追従
         this.ObserveEveryValueChanged(p => Input.mousePosition)
             .Where(_ => isCursorFollowing)
-            .Select(p => Camera.main.ScreenToWorldPoint(p))
-            //.Select(p => new Vector3(p.x, p.y, 1f))
-            .Subscribe(p => transform.position = new Vector3(p.x, p.y, 1f))
-            //.Subscribe(p => transform.DOMove(p, 0.1f))
+            .Select(p => (Vector2)Camera.main.ScreenToWorldPoint(p))
+            .Subscribe(p => transform.position = p)
             .AddTo(this)
             ;
     }
