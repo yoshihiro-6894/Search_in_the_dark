@@ -24,8 +24,10 @@ public class GhostBlock : MonoBehaviour, IReactsToLight
     }
     public void Illuminated(bool characterEnter)
     {
-        if(characterEnter) gameObject.GetComponent<Collider2D>().isTrigger = characterEnter;
-
-        disappearBlock.Restart();
+        if(characterEnter)
+        {
+            gameObject.GetComponent<Collider2D>().isTrigger = characterEnter;
+            disappearBlock.Restart();
+        }
     }
 }

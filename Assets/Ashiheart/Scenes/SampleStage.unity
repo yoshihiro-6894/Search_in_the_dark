@@ -2012,7 +2012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e19c6a8c000bc498baa9111960ffaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartAtCharacterPosition: 0
+  StartByPosition: {fileID: 0}
 --- !u!58 &2029748504
 CircleCollider2D:
   m_ObjectHideFlags: 0

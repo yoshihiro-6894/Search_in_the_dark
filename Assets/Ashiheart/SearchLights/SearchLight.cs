@@ -56,9 +56,9 @@ public class SearchLight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool onPlayerEnter = Physics2D.CircleCast(transform.position, transform.localScale.x * 0.5f * 0.99f, transform.forward, Mathf.Infinity, 1 << 8);
+        bool onPlayerEnter = Physics2D.CircleCast(transform.position, transform.localScale.x * 0.5f * 0.95f, transform.forward, Mathf.Infinity, 1 << 8);
 
-        foreach (var r in Physics2D.CircleCastAll(transform.position, transform.localScale.x * 0.5f * 0.99f, transform.forward, Mathf.Infinity, 1 << 10))
+        foreach (var r in Physics2D.CircleCastAll(transform.position, transform.localScale.x * 0.5f * 0.95f, transform.forward, Mathf.Infinity, 1 << 10))
         {
             r.collider.gameObject.GetComponent<IReactsToLight>()?.Illuminated(onPlayerEnter);
         }
