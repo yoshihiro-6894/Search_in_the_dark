@@ -69,6 +69,7 @@ public class Player : MonoBehaviour
 
                     
                     spd_y = jumpForce;
+
                     this.rigid2D.velocity = new Vector2(key * walkForce, spd_y);
 
                     if (this.transform.position.y >= MaxjumpHeight + GroundYpos)//ジャンプの最高点にいったらジャンプ終了
@@ -88,6 +89,7 @@ public class Player : MonoBehaviour
             }
             else//ジャンプキーを離したら(押すのをやめたら)
             {
+                ablejump = false;
                 if (onGround)//地面に着くと
                 {
                     already_jump = false;

@@ -1080,7 +1080,7 @@ Transform:
   m_GameObject: {fileID: 1326386193}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.46, y: -3.96, z: 1}
-  m_LocalScale: {x: 3.5, y: 3.5, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 766211714}
   m_RootOrder: 1
@@ -1092,7 +1092,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1326386193}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -1162,7 +1162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e19c6a8c000bc498baa9111960ffaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LightRadius: 3.5
+  StartAtCharacterPosition: 1
 --- !u!1 &1883616030 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4730698206878340023, guid: 247321cdd2dea1546ad21b47ce431ca1,
