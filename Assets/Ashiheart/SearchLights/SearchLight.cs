@@ -8,23 +8,21 @@ using UniRx;
 
 public class SearchLight : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-
-    private bool isCursorFollowing = false;
-
-    private float CursorSize;
-
+    [SerializeField] private bool StartAtCharacterPosition = false;
     public bool onPlayerEnter { get; private set; }
+
+    private enum LightState { Wait, Search }
+
+    private LightState lightState = LightState.Wait;
+
 
     private void Awake()
     {
         Cursor.visible = true;
 
-        transform.position = transform.Find("../Character").position;
+        if(StartAtCharacterPosition) transform.position = transform.Find("../Character").position;
 
-        CursorSize = transform.localScale.x;
-
-        transform.localScale = Vector2.one * CursorSize;
+        transform.localScale *= 0.5f;
     }
 
     // Start is called before the first frame update
@@ -32,22 +30,25 @@ public class SearchLight : MonoBehaviour
     {
         // マウスカーソルがライト内に入ったら始まる
         Observable.EveryUpdate()
-            .Where(_ => !isCursorFollowing)
-            .Select(p => (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition))
-            .Select(p => Physics2D.Raycast(p, transform.forward))
+            .Where(_=> lightState == LightState.Wait)
+            .Select(_ => Physics2D.Raycast((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.forward))
             .Where(r => r && string.Equals(r.collider.gameObject.name, gameObject.name))
-            .Subscribe(_ =>
+            .Select(s => transform.localScale * 2.0f)
+            .Subscribe(s =>
                 DOTween.Sequence()
-                    .AppendCallback(() => Cursor.visible = false)
-                    .AppendCallback(() => isCursorFollowing = true)
-                    .Join(transform.DOScale(CursorSize, 0.1f))
+                    .AppendCallback(() =>
+                    {
+                        Cursor.visible = false;
+                        lightState = LightState.Search;
+                    })
+                    .Join(transform.DOScale(s, 0.2f))
                     )
             .AddTo(this)
             ;
 
         // サーチライトのマウス追従
         this.ObserveEveryValueChanged(p => Input.mousePosition)
-            .Where(_ => isCursorFollowing)
+            .Where(_ => lightState == LightState.Search)
             .Select(p => (Vector2)Camera.main.ScreenToWorldPoint(p))
             .Subscribe(p => transform.position = p)
             .AddTo(this)
