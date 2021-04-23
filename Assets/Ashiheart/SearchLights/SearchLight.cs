@@ -6,21 +6,19 @@ using DG.Tweening;
 using System.Linq;
 using UniRx;
 
+[RequireComponent(typeof(Collider2D))]
+
 public class SearchLight : MonoBehaviour
 {
-    [SerializeField] private bool StartAtCharacterPosition = false;
-    public bool onPlayerEnter { get; private set; }
-
-    private enum LightState { Wait, Search }
+    [SerializeField, Header("初期位置を設定できます")] private GameObject StartByPosition = null;
 
     private LightState lightState = LightState.Wait;
-
 
     private void Awake()
     {
         Cursor.visible = true;
 
-        if(StartAtCharacterPosition) transform.position = transform.Find("../Character").position;
+        if (StartByPosition) transform.position = StartByPosition.transform.position; 
 
         transform.localScale *= 0.5f;
     }
@@ -58,11 +56,11 @@ public class SearchLight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        onPlayerEnter = Physics2D.CircleCast(transform.position, transform.localScale.x * 0.5f * 0.99f, transform.forward, Mathf.Infinity, 1 << 8);
+        bool onPlayerEnter = Physics2D.CircleCast(transform.position, transform.localScale.x * 0.5f * 0.99f, transform.forward, Mathf.Infinity, 1 << 8);
 
         foreach (var r in Physics2D.CircleCastAll(transform.position, transform.localScale.x * 0.5f * 0.99f, transform.forward, Mathf.Infinity, 1 << 10))
         {
-            r.collider.gameObject.GetComponent<IDarknessBehaviour>()?.LightEnter(onPlayerEnter);
+            r.collider.gameObject.GetComponent<IReactsToLight>()?.Illuminated(onPlayerEnter);
         }
     }
 }
