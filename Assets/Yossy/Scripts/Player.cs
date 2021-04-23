@@ -13,21 +13,24 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce = 7.0f;//[SerializeField]によってUnityEditor上で編集できる
     [SerializeField] private float walkForce = 4.0f;
     [SerializeField] private float MaxjumpHeight = 2.0f;
-    [SerializeField] ContactFilter2D filter2d;
+    [SerializeField] ContactFilter2D filter2d;//接地判定に用いる
+    [SerializeField] ContactFilter2D upfilter2d;//天井にぶつかったかどうかを判定する
 
     private bool CanMove = true;//移動可能
-    private bool allowJump = true;//ジャンプできるか
     private bool onGround = false;//接地しているか
-    private bool PlayjumpSE = false;
+    private bool upGround = false;//天井にぶつかっているか
+    private bool ablejump = false;//ジャンプ可能
+    private bool already_jump = false;//ジャンプキーを押している間1度でもジャンプしたかどうか
 
     private float key;//左右移動-1,0.1をとる
-    private float GroundYpos;
+    private float GroundYpos;//ジャンプ時の自分のY座標
 
 
     // Start is called before the first frame update
     void Start()
     {
         filter2d.useNormalAngle = true;
+        upfilter2d.useNormalAngle = true;
         this.rigid2D = GetComponent<Rigidbody2D>();
         this.animator = GetComponent<Animator>();
         this.sprite = GetComponent<SpriteRenderer>();
@@ -38,55 +41,66 @@ public class Player : MonoBehaviour
             animator.SetBool("startidle", false);
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    private void FixedUpdate()
     {
         key = Input.GetAxisRaw("Horizontal");//左-1,右1,その他0
         animator.SetFloat("Xvec", key);
-    }
-    private void FixedUpdate()
-    {
         float spd_y=this.rigid2D.velocity.y;
         onGround = rigid2D.IsTouching(filter2d);//接地判定
+        upGround = rigid2D.IsTouching(upfilter2d);
+
+        
+
         if (CanMove)
         {
-            if (allowJump)
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
             {
-                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
+                if(ablejump)
                 {
-                    if (PlayjumpSE)
+                    if (onGround && !already_jump)
                     {
-                        if (onGround)
-                            AudioSE.PlayOneShot(AudioSE.clip);
-
-                        PlayjumpSE = false;
+                        Debug.Log("ジャンプ押した！");
+                        ablejump = true;
+                        AudioSE.PlayOneShot(AudioSE.clip);//ジャンプ音再生
+                        GroundYpos = this.transform.position.y;//地面のy座標を取得
+                        already_jump = true;
                     }
+
+                    
                     spd_y = jumpForce;
-                    if (onGround)//地面についている時、y座標を取得
-                        GroundYpos = this.transform.position.y;
+                    this.rigid2D.velocity = new Vector2(key * walkForce, spd_y);
 
                     if (this.transform.position.y >= MaxjumpHeight + GroundYpos)//ジャンプの最高点にいったらジャンプ終了
-                        allowJump = false;
+                    {
+                        ablejump = false;
+                        Debug.Log("maxJump");
+                    }
 
-                    if (this.rigid2D.velocity.y == 0)//これがないと天井にぶつかったときに空中に浮いてしまう
-                        allowJump = false;
+                    
+                    if (upGround)//これがないと天井にぶつかったときに空中に浮いてしまう
+                    {
+                        ablejump = false;
+                        Debug.Log("天井");
+                    }
                 }
-                else
-                     allowJump = false;
+                
             }
-            else
+            else//ジャンプキーを離したら(押すのをやめたら)
             {
-                if (!allowJump && onGround)
+                if (onGround)//地面に着くと
                 {
-                    allowJump = true;
-                    PlayjumpSE = true;
+                    already_jump = false;
+                    ablejump = true;
                 }
+               
             }
 
-
+            this.rigid2D.velocity = new Vector2(key * walkForce, spd_y);
+                  
             this.animator.SetBool("isjump", !onGround);
 
-            rigid2D.velocity = new Vector2(key * walkForce, spd_y);
+            
         }
         else
             rigid2D.velocity = Vector2.zero;
@@ -94,7 +108,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Trap")
+        if (collision.gameObject.tag == "Trap")//当たったコライダーのタグがTrapだったら
         {
             this.animator.SetBool("GameOver",true);
             NotMove();
@@ -103,8 +117,9 @@ public class Player : MonoBehaviour
 
     public void NotMove()
     {
-        this.CanMove = false;
-        this.AudioSE.PlayOneShot(SEgameover);
+        if (CanMove)//2個以上のトゲに当たった場合SEの重複が起きないようにする
+            this.AudioSE.PlayOneShot(SEgameover);
+        this.CanMove = false;//動けなくする
     }
 
 
