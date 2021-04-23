@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IDarknessBehaviour
+public interface IReactsToLight
 {
-    void LightEnter(bool characterEnter);
-
+    void Illuminated(bool characterEnter);
 }

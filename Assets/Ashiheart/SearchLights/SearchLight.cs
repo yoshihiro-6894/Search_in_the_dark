@@ -6,21 +6,19 @@ using DG.Tweening;
 using System.Linq;
 using UniRx;
 
+[RequireComponent(typeof(Collider2D))]
+
 public class SearchLight : MonoBehaviour
 {
-    [SerializeField] private bool StartAtCharacterPosition = false;
-    public bool onPlayerEnter { get; private set; }
-
-    private enum LightState { Wait, Search }
+    [SerializeField, Header("初期位置を設定できます")] private GameObject StartByPosition = null;
 
     private LightState lightState = LightState.Wait;
-
 
     private void Awake()
     {
         Cursor.visible = true;
 
-        if(StartAtCharacterPosition) transform.position = transform.Find("../Character").position;
+        if (StartByPosition) transform.position = StartByPosition.transform.position; 
 
         transform.localScale *= 0.5f;
     }
@@ -31,7 +29,7 @@ public class SearchLight : MonoBehaviour
         // マウスカーソルがライト内に入ったら始まる
         Observable.EveryUpdate()
             .Where(_=> lightState == LightState.Wait)
-            .Select(_ => Physics2D.Raycast((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.forward))
+            .Select(_ => Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.forward))
             .Where(r => r && string.Equals(r.collider.gameObject.name, gameObject.name))
             .Select(s => transform.localScale * 2.0f)
             .Subscribe(s =>
@@ -49,8 +47,8 @@ public class SearchLight : MonoBehaviour
         // サーチライトのマウス追従
         this.ObserveEveryValueChanged(p => Input.mousePosition)
             .Where(_ => lightState == LightState.Search)
-            .Select(p => (Vector2)Camera.main.ScreenToWorldPoint(p))
-            .Subscribe(p => transform.position = p)
+            .Select(p => Camera.main.ScreenToWorldPoint(p))
+            .Subscribe(p => transform.position = (Vector2)p)
             .AddTo(this)
             ;
     }
@@ -58,11 +56,11 @@ public class SearchLight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        onPlayerEnter = Physics2D.CircleCast(transform.position, transform.localScale.x * 0.5f * 0.99f, transform.forward, Mathf.Infinity, 1 << 8);
+        bool onPlayerEnter = Physics2D.CircleCast(transform.position, transform.localScale.x * 0.5f * 0.99f, transform.forward, Mathf.Infinity, 1 << 8);
 
         foreach (var r in Physics2D.CircleCastAll(transform.position, transform.localScale.x * 0.5f * 0.99f, transform.forward, Mathf.Infinity, 1 << 10))
         {
-            r.collider.gameObject.GetComponent<IDarknessBehaviour>()?.LightEnter(onPlayerEnter);
+            r.collider.gameObject.GetComponent<IReactsToLight>()?.Illuminated(onPlayerEnter);
         }
     }
 }

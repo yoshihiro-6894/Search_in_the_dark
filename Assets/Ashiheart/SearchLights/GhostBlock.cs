@@ -7,22 +7,25 @@ using DG.Tweening;
 
 [RequireComponent(typeof(Collider2D))]
 
-public class GhostBlock : MonoBehaviour, IDarknessBehaviour
+public class GhostBlock : MonoBehaviour, IReactsToLight
 {
-    public bool onLighted { get; set; }
-
-    public void LightEnter(bool characterEnter)
-    {
-        gameObject.GetComponent<Collider2D>().isTrigger = characterEnter;
-    }
+    private Sequence disappearBlock;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.OnTriggerEnter2DAsObservable()
-            .Where(c => string.Equals(c.gameObject.name, "Character"))
-            .Subscribe(c => gameObject.GetComponent<Collider2D>().isTrigger = false)
-            .AddTo(this)
+        disappearBlock = DOTween.Sequence()
+            .AppendInterval(0.1f)
+            .AppendCallback(() => gameObject.GetComponent<Collider2D>().isTrigger = false)
+            //.AppendCallback(() => Debug.Log("disappearBlock called"))
+            .SetAutoKill(false)
+            .Pause()
             ;
+    }
+    public void Illuminated(bool characterEnter)
+    {
+        if(characterEnter) gameObject.GetComponent<Collider2D>().isTrigger = characterEnter;
+
+        disappearBlock.Restart();
     }
 }
