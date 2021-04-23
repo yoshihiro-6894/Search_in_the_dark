@@ -31,7 +31,7 @@ public class SearchLight : MonoBehaviour
         // マウスカーソルがライト内に入ったら始まる
         Observable.EveryUpdate()
             .Where(_=> lightState == LightState.Wait)
-            .Select(_ => Physics2D.Raycast((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.forward))
+            .Select(_ => Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.forward))
             .Where(r => r && string.Equals(r.collider.gameObject.name, gameObject.name))
             .Select(s => transform.localScale * 2.0f)
             .Subscribe(s =>
@@ -49,8 +49,8 @@ public class SearchLight : MonoBehaviour
         // サーチライトのマウス追従
         this.ObserveEveryValueChanged(p => Input.mousePosition)
             .Where(_ => lightState == LightState.Search)
-            .Select(p => (Vector2)Camera.main.ScreenToWorldPoint(p))
-            .Subscribe(p => transform.position = p)
+            .Select(p => Camera.main.ScreenToWorldPoint(p))
+            .Subscribe(p => transform.position = (Vector2)p)
             .AddTo(this)
             ;
     }

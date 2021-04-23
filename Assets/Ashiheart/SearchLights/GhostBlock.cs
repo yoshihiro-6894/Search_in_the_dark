@@ -9,7 +9,6 @@ using DG.Tweening;
 
 public class GhostBlock : MonoBehaviour, IDarknessBehaviour
 {
-    public bool onLighted { get; set; }
 
     public void LightEnter(bool characterEnter)
     {
