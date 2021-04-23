@@ -41,7 +41,7 @@ public class SearchLight : MonoBehaviour
                         Cursor.visible = false;
                         lightState = LightState.Search;
                     })
-                    .Join(transform.DOScale(s, 0.2f))
+                    .Join(transform.DOScale(s, 1.0f))
                     )
             .AddTo(this)
             ;
