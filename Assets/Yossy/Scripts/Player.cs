@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer sprite;
     private AudioSource AudioSE;
     public AudioClip SEgameover;
+    public GameObject fade;
 
     [SerializeField] private float jumpForce = 7.0f;//[SerializeField]によってUnityEditor上で編集できる
     [SerializeField] private float walkForce = 4.0f;
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour
     private bool upGround = false;//天井にぶつかっているか
     private bool ablejump = false;//ジャンプ可能
     private bool already_jump = false;//ジャンプキーを押している間1度でもジャンプしたかどうか
+    private bool StageClear = false;
 
     private float key;//左右移動-1,0.1をとる
     private float GroundYpos;//ジャンプ時の自分のY座標
@@ -98,6 +100,12 @@ public class Player : MonoBehaviour
                
             }
 
+            if (StageClear)
+            {
+                key = 0;
+                this.animator.SetFloat("Xvec", 0);
+            }
+
             this.rigid2D.velocity = new Vector2(key * walkForce, spd_y);
                   
             this.animator.SetBool("isjump", !onGround);
@@ -112,17 +120,23 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Trap")//当たったコライダーのタグがTrapだったら
         {
-            this.animator.SetBool("GameOver",true);
-            NotMove();
+            if(!StageClear)
+                NotMove();
         }
     }
 
     public void NotMove()
     {
+        this.animator.SetBool("GameOver", true);
         if (CanMove)//2個以上のトゲに当たった場合SEの重複が起きないようにする
             this.AudioSE.PlayOneShot(SEgameover);
         this.CanMove = false;//動けなくする
+        fade.GetComponent<FadeManager>().Blackout(1f);
     }
-
-
+    
+    public void GetGoal()
+    {
+        StageClear = true;
+        fade.GetComponent<FadeManager>().Blackout(1f);
+    }
 }

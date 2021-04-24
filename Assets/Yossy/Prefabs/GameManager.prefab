@@ -44,5 +44,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goal: {fileID: 4730698206878340023, guid: 247321cdd2dea1546ad21b47ce431ca1, type: 3}
-  awakegoal: {fileID: 8300000, guid: 1038e3d85f804664894a915606de9412, type: 3}
-  FinishStage: {fileID: 8300000, guid: 10c2f03ae3c34fe46b3a85d99233309b, type: 3}

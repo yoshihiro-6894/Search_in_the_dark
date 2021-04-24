@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public GameObject goal;//鍵を全部取ったら出現するゴール
     private int CountKey = 0;//鍵の数
     private bool Set = false;
+    [SerializeField] private int nowStage = 1;
 
 
     private void Awake()

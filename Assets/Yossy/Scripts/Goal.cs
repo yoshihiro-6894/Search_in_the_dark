@@ -9,7 +9,7 @@ public class Goal : MonoBehaviour
     private Collider2D col2d;
     public AudioClip Awakegoal;
     public AudioClip FinishStage;
-    
+    public GameObject Player;
 
     private bool NotFinish = true;
 
@@ -37,6 +37,7 @@ public class Goal : MonoBehaviour
         {
             AudioGoal.PlayOneShot(FinishStage);
             NotFinish = false;
+            Player.GetComponent<Player>().GetGoal();
         }
     }
 }

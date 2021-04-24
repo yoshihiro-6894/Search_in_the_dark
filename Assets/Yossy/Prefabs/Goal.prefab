@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Awakegoal: {fileID: 8300000, guid: 1038e3d85f804664894a915606de9412, type: 3}
   FinishStage: {fileID: 8300000, guid: 10c2f03ae3c34fe46b3a85d99233309b, type: 3}
+  Player: {fileID: 9146414024306446103, guid: beb703098af2a534892d65cf84c67f21, type: 3}
 --- !u!61 &4730698206878346315
 BoxCollider2D:
   m_ObjectHideFlags: 0
