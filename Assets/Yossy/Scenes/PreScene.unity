@@ -384,11 +384,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainBGM
       objectReference: {fileID: 0}
-    - target: {fileID: 55036400281391923, guid: b463f7098b2826b4bb8bc41199686641,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0.15
-      objectReference: {fileID: 0}
     - target: {fileID: 55036400281391925, guid: b463f7098b2826b4bb8bc41199686641,
         type: 3}
       propertyPath: m_LocalPosition.x

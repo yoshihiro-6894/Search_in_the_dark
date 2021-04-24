@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     private int CountKey = 0;//鍵の数
     private bool Set = false;
     [SerializeField] private int nowStage = 1;
+    public stageButton nextbutton;
+    public FadeManager fade;
 
 
     private void Awake()
@@ -19,7 +21,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        nextbutton.SetStageNumber(nowStage);
+        fade.SetStagenuber(nowStage);
     }
 
     // Update is called once per frame

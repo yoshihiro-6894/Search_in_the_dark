@@ -131,12 +131,12 @@ public class Player : MonoBehaviour
         if (CanMove)//2個以上のトゲに当たった場合SEの重複が起きないようにする
             this.AudioSE.PlayOneShot(SEgameover);
         this.CanMove = false;//動けなくする
-        fade.GetComponent<FadeManager>().Blackout(1f);
+        fade.GetComponent<FadeManager>().Blackout(1f,true);
     }
     
     public void GetGoal()
     {
         StageClear = true;
-        fade.GetComponent<FadeManager>().Blackout(1f);
+        fade.GetComponent<FadeManager>().Blackout(1f,false);
     }
 }
