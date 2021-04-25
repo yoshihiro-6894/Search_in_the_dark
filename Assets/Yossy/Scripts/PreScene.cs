@@ -8,7 +8,7 @@ public class PreScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SceneManager.LoadScene("Pre_StageSelect");
+        SceneManager.LoadScene("StageSelect");
     }
 
     // Update is called once per frame

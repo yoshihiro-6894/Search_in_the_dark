@@ -6,14 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Yossy/Scenes/Pre_title.unity
+    path: Assets/Scenes/Title.unity
     guid: d4ef0985b3c307c47ac4312d9657b0b1
   - enabled: 1
-    path: Assets/Yossy/Scenes/PreScene.unity
+    path: Assets/Scenes/PreScene.unity
     guid: ae783527bfe4f13409fe744077f4c6fd
   - enabled: 1
-    path: Assets/Yossy/Scenes/Pre_StageSelect.unity
-    guid: 3d672e6ea398bc448bbeb169ada1256f
+    path: Assets/Scenes/StageSelect.unity
+    guid: fa4fe975bbec9f54da898e68a1317479
   - enabled: 1
     path: Assets/Scenes/Stage_1.unity
     guid: f26887266681f9f4688f45ea9c892395

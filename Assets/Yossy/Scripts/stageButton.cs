@@ -22,7 +22,7 @@ public class stageButton : MonoBehaviour
 
     public void ReturnSelect()
     {
-        SceneManager.LoadScene("Pre_StageSelect");
+        SceneManager.LoadScene("StageSelect");
     }
 
     public void GotoNext()
