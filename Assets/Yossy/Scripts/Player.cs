@@ -131,6 +131,7 @@ public class Player : MonoBehaviour
         if (CanMove)//2個以上のトゲに当たった場合SEの重複が起きないようにする
             this.AudioSE.PlayOneShot(SEgameover);
         this.CanMove = false;//動けなくする
+        this.rigid2D.bodyType = RigidbodyType2D.Kinematic;
         fade.GetComponent<FadeManager>().Blackout(1f,true);
     }
     
