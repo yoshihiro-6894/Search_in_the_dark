@@ -94,7 +94,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4730698206878340023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39235d659d1e7994fbaa86f2d5241ccf, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bac0e15d1e867a408cba1cbaf695db7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Awakegoal: {fileID: 8300000, guid: 1038e3d85f804664894a915606de9412, type: 3}
