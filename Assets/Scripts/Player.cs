@@ -11,9 +11,9 @@ public class Player : MonoBehaviour
     public AudioClip SEgameover;
     public GameObject fade;
 
-    [SerializeField] private float jumpForce = 7.0f;//[SerializeField]によってUnityEditor上で編集できる
-    [SerializeField] private float walkForce = 4.0f;
-    [SerializeField] private float MaxjumpHeight = 2.0f;
+    [Header("ジャンプ力")][SerializeField] private float jumpForce = 7.0f;//[SerializeField]によってUnityEditor上で編集できる
+    [Header("移動の力")][SerializeField] private float walkForce = 4.0f;
+    [Header("ジャンプの最大の高さ")][SerializeField] private float MaxjumpHeight = 2.0f;
     [SerializeField] ContactFilter2D filter2d;//接地判定に用いる
     [SerializeField] ContactFilter2D upfilter2d;//天井にぶつかったかどうかを判定する
 

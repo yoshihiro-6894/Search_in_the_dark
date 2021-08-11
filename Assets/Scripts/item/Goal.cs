@@ -7,9 +7,9 @@ public class Goal : MonoBehaviour
     private Animator goalAnim;
     private AudioSource AudioGoal;
     private Collider2D col2d;
-    public AudioClip Awakegoal;
-    public AudioClip FinishStage;
-    public GameObject Player;
+    [Header("ゴールアイテムが出現時のSE")]public AudioClip Awakegoal;
+    [Header("ステージクリアのSE")]public AudioClip FinishStage;
+    [Header("プレイヤーキャラクタ")]public GameObject Player;
 
     private bool NotFinish = true;
 
