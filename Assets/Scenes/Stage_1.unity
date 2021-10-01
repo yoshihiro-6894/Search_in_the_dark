@@ -212,6 +212,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2857094520871865282}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &107505252 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2857094520768572838, guid: 987cd518a2491b143ae71f84150c4d65,
+    type: 3}
+  m_PrefabInstance: {fileID: 2857094520871865282}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107505250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &156549303
 GameObject:
   m_ObjectHideFlags: 0
@@ -1296,11 +1308,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 169804850}
     m_Modifications:
+    - target: {fileID: -8792859971721753778, guid: 247321cdd2dea1546ad21b47ce431ca1,
+        type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: 107505252}
     - target: {fileID: 4730698206878340022, guid: 247321cdd2dea1546ad21b47ce431ca1,
         type: 3}
       propertyPath: Player
       value: 
       objectReference: {fileID: 1306584859}
+    - target: {fileID: 4730698206878340022, guid: 247321cdd2dea1546ad21b47ce431ca1,
+        type: 3}
+      propertyPath: fademanage
+      value: 
+      objectReference: {fileID: 107505250}
     - target: {fileID: 4730698206878340023, guid: 247321cdd2dea1546ad21b47ce431ca1,
         type: 3}
       propertyPath: m_Name
@@ -1462,20 +1484,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2857094520768572832, guid: 987cd518a2491b143ae71f84150c4d65,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2857094521233873069, guid: 987cd518a2491b143ae71f84150c4d65,
         type: 3}
       propertyPath: m_Name
       value: UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 2857094521233873069, guid: 987cd518a2491b143ae71f84150c4d65,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2857094521233873073, guid: 987cd518a2491b143ae71f84150c4d65,
         type: 3}
@@ -1582,37 +1594,8 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3178033951655291212, guid: 987cd518a2491b143ae71f84150c4d65,
-        type: 3}
-      propertyPath: mouselight
-      value: 
-      objectReference: {fileID: 1326386193}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 987cd518a2491b143ae71f84150c4d65, type: 3}
---- !u!114 &2857094520871865283 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3178033951655291212, guid: 987cd518a2491b143ae71f84150c4d65,
-    type: 3}
-  m_PrefabInstance: {fileID: 2857094520871865282}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107505250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93307ae6c250ac643b75b2613f54be49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2857094520871865284 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3691550349417926175, guid: 987cd518a2491b143ae71f84150c4d65,
-    type: 3}
-  m_PrefabInstance: {fileID: 2857094520871865282}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 143ba5f50e4145142a31cb61ca0d4e99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6830138564176669815
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1689,12 +1672,12 @@ PrefabInstance:
         type: 3}
       propertyPath: fade
       value: 
-      objectReference: {fileID: 2857094520871865283}
+      objectReference: {fileID: 0}
     - target: {fileID: 6830138564962220440, guid: bd85840b2048c054fa95eed192608dd4,
         type: 3}
       propertyPath: nextbutton
       value: 
-      objectReference: {fileID: 2857094520871865284}
+      objectReference: {fileID: 0}
     - target: {fileID: 6830138564962220441, guid: bd85840b2048c054fa95eed192608dd4,
         type: 3}
       propertyPath: m_Name

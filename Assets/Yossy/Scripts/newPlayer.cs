@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class newPlayer : MonoBehaviour
 {
     private Rigidbody2D rigid2D;
     private Animator animator;
@@ -11,9 +11,9 @@ public class Player : MonoBehaviour
     public AudioClip SEgameover;
     public GameObject fade;
 
-    [Header("ジャンプ力")][SerializeField] private float jumpForce = 7.0f;//[SerializeField]によってUnityEditor上で編集できる
-    [Header("移動の力")][SerializeField] private float walkForce = 4.0f;
-    [Header("ジャンプの最大の高さ")][SerializeField] private float MaxjumpHeight = 2.0f;
+    [Header("ジャンプ力")] [SerializeField] private float jumpForce = 7.0f;//[SerializeField]によってUnityEditor上で編集できる
+    [Header("移動の力")] [SerializeField] private float walkForce = 4.0f;
+    [Header("ジャンプの最大の高さ")] [SerializeField] private float MaxjumpHeight = 2.0f;
     [SerializeField] ContactFilter2D filter2d;//接地判定に用いる
     [SerializeField] ContactFilter2D upfilter2d;//天井にぶつかったかどうかを判定する
 
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
 
-        float spd_y=this.rigid2D.velocity.y;
+        float spd_y = this.rigid2D.velocity.y;
         onGround = rigid2D.IsTouching(filter2d);//接地判定
         upGround = rigid2D.IsTouching(upfilter2d);
 
@@ -123,7 +123,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Trap")//当たったコライダーのタグがTrapだったら
         {
-            if(!StageClear)
+            if (!StageClear)
                 NotMove();
         }
     }
@@ -135,14 +135,12 @@ public class Player : MonoBehaviour
             this.AudioSE.PlayOneShot(SEgameover);
         this.CanMove = false;//動けなくする
         this.rigid2D.bodyType = RigidbodyType2D.Kinematic;
-        RegisterResult.STAGE_CLEAR = false;
-        fade.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1f);
+        fade.GetComponent<FadeManager>().Blackout(1f, true);
     }
-    
+
     public void GetGoal()
     {
         StageClear = true;
-        RegisterResult.STAGE_CLEAR = true;
-        fade.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1f);
+        fade.GetComponent<FadeManager>().Blackout(1f, false);
     }
 }

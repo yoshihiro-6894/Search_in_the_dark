@@ -10,6 +10,7 @@ public class Goal : MonoBehaviour
     [Header("ゴールアイテムが出現時のSE")]public AudioClip Awakegoal;
     [Header("ステージクリアのSE")]public AudioClip FinishStage;
     [Header("プレイヤーキャラクタ")]public GameObject Player;
+    //public GameObject fademanage;
 
     private bool NotFinish = true;
 
@@ -38,6 +39,7 @@ public class Goal : MonoBehaviour
             AudioGoal.PlayOneShot(FinishStage);
             NotFinish = false;
             Player.GetComponent<Player>().GetGoal();
+            //fademanage.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1f);
         }
     }
 }

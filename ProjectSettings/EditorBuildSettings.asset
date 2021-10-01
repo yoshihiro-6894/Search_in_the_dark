@@ -44,4 +44,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Stage_10.unity
     guid: 72276122ca47e1d40b9e1dedcb126599
+  - enabled: 1
+    path: Assets/Yossy/Scenes/StageResult.unity
+    guid: 40f7d8ebc28356b4bb87f4b1f6cc241e
   m_configObjects: {}

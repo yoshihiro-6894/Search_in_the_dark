@@ -35,5 +35,7 @@ public class MoveBlock : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.V)&& !slideBlock.IsPlaying())
             slideBlock.Restart();
+
+        //Debug.Log(this.gameObject.GetComponent<Rigidbody2D>().velocity.x);
     }
 }
