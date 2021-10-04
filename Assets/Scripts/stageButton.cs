@@ -10,6 +10,7 @@ public class stageButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SetStageNumber(RegisterResult.STAGE_NUMBER);
         Cursor.visible = true;
     }
 
@@ -17,7 +18,7 @@ public class stageButton : MonoBehaviour
 
     public void AgainStage()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Stage_" + stagenumber.ToString());
     }
 
     public void ReturnSelect()

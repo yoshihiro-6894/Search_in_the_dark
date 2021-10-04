@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     private bool StageClear = false;
 
     private float key;//左右移動-1,0.1をとる
+    private float spd_y;
     private float GroundYpos;//ジャンプ時の自分のY座標
 
 
@@ -43,77 +44,51 @@ public class Player : MonoBehaviour
             animator.SetBool("startidle", false);
     }
 
-    
-    private void FixedUpdate()
+    private void Update()
     {
         key = Input.GetAxisRaw("Horizontal");//左-1,右1,その他0
         animator.SetFloat("Xvec", key);
-        float spd_y=this.rigid2D.velocity.y;
+    }
+
+
+    private void FixedUpdate()
+    {
+
+        spd_y=this.rigid2D.velocity.y;
         onGround = rigid2D.IsTouching(filter2d);//接地判定
         upGround = rigid2D.IsTouching(upfilter2d);
 
-        
-
-        if (CanMove)
+        if (!CanMove)
         {
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
-            {
-                if(ablejump)
-                {
-                    if (onGround && !already_jump)
-                    {
-                        Debug.Log("ジャンプ押した！");
-                        ablejump = true;
-                        AudioSE.PlayOneShot(AudioSE.clip);//ジャンプ音再生
-                        GroundYpos = this.transform.position.y;//地面のy座標を取得
-                        already_jump = true;
-                    }
-
-                    
-                    spd_y = jumpForce;
-
-                    this.rigid2D.velocity = new Vector2(key * walkForce, spd_y);
-
-                    if (this.transform.position.y >= MaxjumpHeight + GroundYpos)//ジャンプの最高点にいったらジャンプ終了
-                    {
-                        ablejump = false;
-                        Debug.Log("maxJump");
-                    }
-
-                    
-                    if (upGround)//これがないと天井にぶつかったときに空中に浮いてしまう
-                    {
-                        ablejump = false;
-                        Debug.Log("天井");
-                    }
-                }
-                
-            }
-            else//ジャンプキーを離したら(押すのをやめたら)
-            {
-                ablejump = false;
-                if (onGround)//地面に着くと
-                {
-                    already_jump = false;
-                    ablejump = true;
-                }
-               
-            }
-
-            if (StageClear)
-            {
-                key = 0;
-                this.animator.SetFloat("Xvec", 0);
-            }
-
-            this.rigid2D.velocity = new Vector2(key * walkForce, spd_y);
-                  
-            this.animator.SetBool("isjump", !onGround);
-
-            
-        }
-        else
             rigid2D.velocity = Vector2.zero;
+            return;
+        }
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
+        {
+            JumpAction();
+
+        }
+        else//ジャンプキーを離したら(押すのをやめたら)
+        {
+            ablejump = false;
+            if (onGround)//地面に着くと
+            {
+                already_jump = false;
+                ablejump = true;
+            }
+
+        }
+
+        if (StageClear)
+        {
+            key = 0;
+            this.animator.SetFloat("Xvec", 0);
+        }
+
+        this.rigid2D.velocity = new Vector2(key * walkForce, spd_y);
+
+        this.animator.SetBool("isjump", !onGround);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -132,12 +107,46 @@ public class Player : MonoBehaviour
             this.AudioSE.PlayOneShot(SEgameover);
         this.CanMove = false;//動けなくする
         this.rigid2D.bodyType = RigidbodyType2D.Kinematic;
-        fade.GetComponent<FadeManager>().Blackout(1f,true);
+        RegisterResult.STAGE_CLEAR = false;
+        fade.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1f);
     }
     
     public void GetGoal()
     {
         StageClear = true;
-        fade.GetComponent<FadeManager>().Blackout(1f,false);
+        RegisterResult.STAGE_CLEAR = true;
+        fade.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1f);
+    }
+
+    private void JumpAction()
+    {
+        if (!ablejump) return;
+
+        if (onGround && !already_jump)
+        {
+            Debug.Log("ジャンプ押した！");
+            ablejump = true;
+            AudioSE.PlayOneShot(AudioSE.clip);//ジャンプ音再生
+            GroundYpos = this.transform.position.y;//地面のy座標を取得
+            already_jump = true;
+        }
+
+
+        spd_y = jumpForce;
+
+        this.rigid2D.velocity = new Vector2(key * walkForce, spd_y);
+
+        if (this.transform.position.y >= MaxjumpHeight + GroundYpos)//ジャンプの最高点にいったらジャンプ終了
+        {
+            ablejump = false;
+            Debug.Log("maxJump");
+        }
+
+
+        if (upGround)//これがないと天井にぶつかったときに空中に浮いてしまう
+        {
+            ablejump = false;
+            Debug.Log("天井");
+        }
     }
 }
