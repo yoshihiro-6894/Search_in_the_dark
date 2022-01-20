@@ -12,14 +12,13 @@ GameObject:
   - component: {fileID: 55036400281391922}
   - component: {fileID: 55036400281391923}
   - component: {fileID: 55036400281391920}
-  - component: {fileID: 2657547242040331776}
   m_Layer: 0
   m_Name: MainBGM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &55036400281391925
 Transform:
   m_ObjectHideFlags: 0
@@ -236,17 +235,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed938e271a59be6488b058c8d263994d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2657547242040331776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 55036400281391921}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ea9f29d3fef0224bb7c315d8a5348df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

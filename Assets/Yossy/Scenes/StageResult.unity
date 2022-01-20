@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextButton: {fileID: 1848066211150109990}
+  maxStageNumber: 10
 --- !u!4 &659488657
 Transform:
   m_ObjectHideFlags: 0

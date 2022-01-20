@@ -73,7 +73,7 @@ public class slideBlock : MonoBehaviour
                 }
             }
         }
-        BlockVec = rbody2d.GetPointVelocity(Vector2.zero) ;
-        Debug.Log(BlockVec);
+        //BlockVec = rbody2d.GetPointVelocity(Vector2.zero) ;
+        //Debug.Log(BlockVec);
     }
 }

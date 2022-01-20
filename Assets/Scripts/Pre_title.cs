@@ -16,7 +16,7 @@ public class Pre_title : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            SceneManager.LoadScene("PreScene");
+            SceneManager.LoadScene("StageSelect");
         }
     }
 }

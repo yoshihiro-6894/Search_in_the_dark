@@ -16,10 +16,12 @@ public class Player : MonoBehaviour
     [Header("ジャンプの最大の高さ")][SerializeField] private float MaxjumpHeight = 2.0f;
     [SerializeField] ContactFilter2D filter2d;//接地判定に用いる
     [SerializeField] ContactFilter2D upfilter2d;//天井にぶつかったかどうかを判定する
+    [SerializeField] ContactFilter2D slidefilter2d;
 
     private bool CanMove = true;//移動可能
     private bool onGround = false;//接地しているか
     private bool upGround = false;//天井にぶつかっているか
+    private bool onMoveBlock = false;//動く床にのっているか
     private bool ablejump = false;//ジャンプ可能
     private bool already_jump = false;//ジャンプキーを押している間1度でもジャンプしたかどうか
     private bool StageClear = false;
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
     {
         filter2d.useNormalAngle = true;
         upfilter2d.useNormalAngle = true;
+        slidefilter2d.useNormalAngle = true;
         this.rigid2D = GetComponent<Rigidbody2D>();
         this.animator = GetComponent<Animator>();
         this.sprite = GetComponent<SpriteRenderer>();
@@ -57,6 +60,7 @@ public class Player : MonoBehaviour
         spd_y=this.rigid2D.velocity.y;
         onGround = rigid2D.IsTouching(filter2d);//接地判定
         upGround = rigid2D.IsTouching(upfilter2d);
+        onMoveBlock = rigid2D.IsTouching(slidefilter2d);
 
         if (!CanMove)
         {
@@ -98,6 +102,7 @@ public class Player : MonoBehaviour
             if(!StageClear)
                 NotMove();
         }
+
     }
 
     public void NotMove()
@@ -108,14 +113,14 @@ public class Player : MonoBehaviour
         this.CanMove = false;//動けなくする
         this.rigid2D.bodyType = RigidbodyType2D.Kinematic;
         RegisterResult.STAGE_CLEAR = false;
-        fade.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1f);
+        fade.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1.8f);
     }
     
     public void GetGoal()
     {
         StageClear = true;
         RegisterResult.STAGE_CLEAR = true;
-        fade.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1f);
+        fade.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1.8f);
     }
 
     private void JumpAction()
