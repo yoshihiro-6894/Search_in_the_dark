@@ -4,9 +4,24 @@ using UnityEngine;
 
 public class BGMmanage : MonoBehaviour
 {
+    public static BGMmanage instance = null;
+
     private AudioSource[] audiosource;
 
     private float looptime = 138f;
+
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
+
 
     // Start is called before the first frame update
     void Start()
