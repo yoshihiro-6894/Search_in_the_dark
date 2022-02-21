@@ -39,7 +39,7 @@ public class Goal : MonoBehaviour
             AudioGoal.PlayOneShot(FinishStage);
             NotFinish = false;
             Player.GetComponent<Player>().GetGoal();
-            //fademanage.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1f);
+            FadeManager.Instance.LoadScene("StageResult", 2.0f, false);
         }
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class stageButton : MonoBehaviour
 {
     private int stagenumber;
+    private float fadetime = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,18 +19,19 @@ public class stageButton : MonoBehaviour
 
     public void AgainStage()
     {
-        SceneManager.LoadScene("Stage_" + stagenumber.ToString());
+        string scenename = "Stage_" + stagenumber.ToString();
+        FadeManager.Instance.LoadScene(scenename, fadetime, false);
     }
 
     public void ReturnSelect()
     {
-        SceneManager.LoadScene("StageSelect");
+        FadeManager.Instance.LoadScene("StageSelect", fadetime, false);
     }
 
     public void GotoNext()
     {
         int nextstage = stagenumber + 1;
-        SceneManager.LoadScene("Stage_" + nextstage.ToString());
+        FadeManager.Instance.LoadScene("Stage_" + nextstage.ToString(), fadetime, false);
     }
 
     public void SetStageNumber(int now)

@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     private SpriteRenderer sprite;
     private AudioSource AudioSE;
     public AudioClip SEgameover;
-    public GameObject fade;
 
     [Header("ジャンプ力")][SerializeField] private float jumpForce = 7.0f;//[SerializeField]によってUnityEditor上で編集できる
     [Header("移動の力")][SerializeField] private float walkForce = 4.0f;
@@ -113,14 +112,13 @@ public class Player : MonoBehaviour
         this.CanMove = false;//動けなくする
         this.rigid2D.bodyType = RigidbodyType2D.Kinematic;
         RegisterResult.STAGE_CLEAR = false;
-        fade.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1.8f);
+        FadeManager.Instance.LoadScene("StageResult", 2.0f, false);
     }
     
     public void GetGoal()
     {
         StageClear = true;
         RegisterResult.STAGE_CLEAR = true;
-        fade.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1.8f);
     }
 
     private void JumpAction()
