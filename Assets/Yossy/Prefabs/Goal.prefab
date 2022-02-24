@@ -97,10 +97,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bac0e15d1e867a408cba1cbaf695db7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goalAnim: {fileID: 1119119927974250684}
+  AudioGoal: {fileID: -9017809899081171055}
+  col2d: {fileID: 4730698206878346315}
   Awakegoal: {fileID: 8300000, guid: 1038e3d85f804664894a915606de9412, type: 3}
   FinishStage: {fileID: 8300000, guid: 10c2f03ae3c34fe46b3a85d99233309b, type: 3}
   Player: {fileID: 9146414024306446103, guid: beb703098af2a534892d65cf84c67f21, type: 3}
-  fademanage: {fileID: 0}
 --- !u!61 &4730698206878346315
 BoxCollider2D:
   m_ObjectHideFlags: 0

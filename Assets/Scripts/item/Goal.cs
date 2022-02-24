@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    private Animator goalAnim;
-    private AudioSource AudioGoal;
-    private Collider2D col2d;
+    [SerializeField]private Animator goalAnim;
+    [SerializeField]private AudioSource AudioGoal;
+    [SerializeField]private Collider2D col2d;
     [Header("ゴールアイテムが出現時のSE")]public AudioClip Awakegoal;
     [Header("ステージクリアのSE")]public AudioClip FinishStage;
     [Header("プレイヤーキャラクタ")]public GameObject Player;
@@ -17,10 +17,7 @@ public class Goal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioGoal = GetComponent<AudioSource>();
         AudioGoal.PlayOneShot(Awakegoal);
-        col2d = GetComponent<BoxCollider2D>();
-        goalAnim = GetComponent<Animator>();
         goalAnim.SetBool("isGet", false);
     }
 
