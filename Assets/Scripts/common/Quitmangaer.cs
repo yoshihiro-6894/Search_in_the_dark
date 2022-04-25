@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class Quitmangaer : MonoBehaviour
 {
+    public static Quitmangaer Instance = null;
+
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+
     // Update is called once per frame
     void Update()
     {

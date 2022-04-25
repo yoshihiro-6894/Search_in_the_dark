@@ -5,18 +5,15 @@ using UnityEngine;
 public class key : MonoBehaviour
 {
     private GameManager gamemanager;
-    private Animator keyAnim;
-    private AudioSource audioSource;
-    Collider2D col2d;
+    [SerializeField]private Animator keyAnim;
+    [SerializeField]private AudioSource audioSource;
+    [SerializeField]private Collider2D col2d;
 
     private bool NotGet = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        col2d = GetComponent<PolygonCollider2D>();
-        keyAnim = GetComponent<Animator>();
         keyAnim.SetBool("IsGetkey", false);
         gamemanager = GameObject.Find("GameManager").GetComponent<GameManager>();
         gamemanager.UpCount();

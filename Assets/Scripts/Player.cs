@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private Rigidbody2D rigid2D;
-    private Animator animator;
-    private SpriteRenderer sprite;
-    private AudioSource AudioSE;
+    [SerializeField]private Rigidbody2D rigid2D;
+    [SerializeField]private Animator animator;
+    [SerializeField]private SpriteRenderer sprite;
+    [SerializeField]private AudioSource AudioSE;
     public AudioClip SEgameover;
-    public GameObject fade;
 
     [Header("ジャンプ力")][SerializeField] private float jumpForce = 7.0f;//[SerializeField]によってUnityEditor上で編集できる
     [Header("移動の力")][SerializeField] private float walkForce = 4.0f;
@@ -37,10 +36,6 @@ public class Player : MonoBehaviour
         filter2d.useNormalAngle = true;
         upfilter2d.useNormalAngle = true;
         slidefilter2d.useNormalAngle = true;
-        this.rigid2D = GetComponent<Rigidbody2D>();
-        this.animator = GetComponent<Animator>();
-        this.sprite = GetComponent<SpriteRenderer>();
-        this.AudioSE = GetComponent<AudioSource>();
         if (sprite.sprite.name == "right1")
             animator.SetBool("startidle", true);
         else
@@ -113,14 +108,13 @@ public class Player : MonoBehaviour
         this.CanMove = false;//動けなくする
         this.rigid2D.bodyType = RigidbodyType2D.Kinematic;
         RegisterResult.STAGE_CLEAR = false;
-        fade.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1.8f);
+        FadeManager.Instance.LoadScene("StageResult", 2.0f, false);
     }
     
     public void GetGoal()
     {
         StageClear = true;
         RegisterResult.STAGE_CLEAR = true;
-        fade.GetComponent<FadeSceneChange>().FadeLoadSceneChange("StageResult", 1.8f);
     }
 
     private void JumpAction()

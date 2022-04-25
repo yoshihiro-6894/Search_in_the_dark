@@ -97,6 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1b58a5d8a90a1499b23017cbbacd9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyAnim: {fileID: 1645923639663545724}
+  audioSource: {fileID: -2700755035356632373}
+  col2d: {fileID: 3525782693834036039}
 --- !u!95 &1645923639663545724
 Animator:
   serializedVersion: 3
